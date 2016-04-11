@@ -63,6 +63,7 @@
     "less": "^2.5.3"
   },
   "dependencies": {
+    "bootstrap": "^3.3.6",
     "core-js": "^2.0.0",
     "normalize.css": "^4.0.0",
     "react": "^0.14.0",

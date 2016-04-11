@@ -6,6 +6,28 @@ import React from 'react';
 let itexicoImage = require('../images/itexico.png');
 let reactImage = require('../images/react.png');
 
+class InnerComponent extends React.Component {
+
+    handleClick() {
+        // Some other logic goes here
+        this.props.clickedShit();
+    }
+
+    shouldComponentUpdate() {
+        if(this.props.name === nextProps.name) { return false; }
+
+        return true;
+    }
+
+    render() {
+        return (
+            <div onClick={this.handleClick.bind(this)}>
+                {this.props.name}
+            </div>
+        );
+    }
+}
+
 class AppComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -30,7 +52,12 @@ class AppComponent extends React.Component {
         this.detectMouseMove();
     }
 
+    click() {
+        console.log('Im clicked');
+    }
+
     render() {
+        console.log('yo! Im rendered again!');
 
         let x = this.state.x,
             y = this.state.y,
@@ -45,6 +72,11 @@ class AppComponent extends React.Component {
                     <div className="col-sm-6">
                         <image src={itexicoImage} alt="iTexico Logo" height="150"/>
                     </div>
+                </div>
+                <div>
+                    <InnerComponent
+                        name="demo"
+                        clickedShit={this.click.bind(this)} />
                 </div>
                 <div className="jumbotron" style={style} id="jumbotron">
                     <div className="row">

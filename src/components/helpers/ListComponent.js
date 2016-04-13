@@ -10,6 +10,7 @@ export class ListChildComponent extends React.Component {
     }
 
     render() {
+        console.log('hoa estoy en child');
         return (
             <li onClick={this.handleClick.bind(this)}>
                 {this.props.children}
@@ -34,6 +35,7 @@ export class ListComponent extends React.Component {
     }
 
     render() {
+        console.log('hola estoy en list');
         return (
             <ul className="list-component">
                 {this.renderChildren()}

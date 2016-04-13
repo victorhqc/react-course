@@ -58,6 +58,17 @@ class SearchComponent extends React.Component {
         });
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if(
+            this.props.refresh !== nextProps.refresh ||
+            nextState !== this.state
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
     search() {
         let needle = this.refs.search.value;
 
@@ -72,6 +83,7 @@ class SearchComponent extends React.Component {
     }
 
     render() {
+        console.log('hola estoy en search');
         return (
             <div className="search-component">
                 <input
@@ -97,6 +109,8 @@ SearchComponent.displayName = 'SearchComponent';
 
 // Uncomment properties you need
 // SearchComponent.propTypes = {};
-// SearchComponent.defaultProps = {};
+SearchComponent.defaultProps = {
+    refresh: false
+};
 
 export default SearchComponent;

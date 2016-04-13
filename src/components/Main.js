@@ -29,18 +29,31 @@ const users =  [
     }
 ];
 
-class ListComponent extends React.Component {
-
-    chosenList(e) {
-        this.props.chosenMiddle(e.target);
+class ListChildComponent extends React.Component {
+    handleClick(e) {
+        this.props.myClick(this.props.element);
     }
+
+    render() {
+        return (
+            <li onClick={this.handleClick.bind(this)}>
+                {this.props.children}
+            </li>
+        );
+    }
+};
+
+class ListComponent extends React.Component {
 
     renderChildren() {
         return this.props.data.map((element, i) => {
-            return <li
+            return <ListChildComponent
                 id={i}
-                onClick={this.chosenList.bind(this)}
-                key={i}>{element.name}</li>;
+                element={element}
+                myClick={this.props.chosenMiddle}
+                key={i}>
+                    {element.name}
+            </ListChildComponent>;
         });
     }
 

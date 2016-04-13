@@ -71,6 +71,10 @@ class SearchComponent extends React.Component {
 
     search() {
         let needle = this.refs.search.value;
+        console.log('needle', needle);
+        if(!needle) {
+            return this.setState({users: []});
+        }
 
         this.searchInUsers(needle)
         .then(users => {
@@ -89,7 +93,9 @@ class SearchComponent extends React.Component {
                 <input
                     className="form-control"
                     ref="search"
-                    type="text" />
+                    type="text"
+                    onChange={this.search.bind(this)}
+                    />
                 <button
                     className="btn btn-success"
                     onClick={this.search.bind(this)}>
@@ -110,7 +116,10 @@ SearchComponent.displayName = 'SearchComponent';
 // Uncomment properties you need
 // SearchComponent.propTypes = {};
 SearchComponent.defaultProps = {
-    refresh: false
+    refresh: false,
+    searchParameters: ['name'],
+    title: 'name',
+    description: 'email'
 };
 
 export default SearchComponent;

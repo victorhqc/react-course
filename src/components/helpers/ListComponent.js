@@ -37,7 +37,7 @@ export class ListComponent extends React.Component {
     render() {
         console.log('hola estoy en list');
         return (
-            <ul className="list-component">
+            <ul className="list-component nav nav-pills nav-stacked">
                 {this.renderChildren()}
             </ul>
         );

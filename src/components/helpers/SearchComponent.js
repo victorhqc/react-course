@@ -3,7 +3,7 @@
 import React from 'react';
 import { ListComponent } from './ListComponent';
 
-const _ = require('lodash');
+//const _ = require('lodash');
 
 require('styles/helpers/Search.less');
 
@@ -13,7 +13,7 @@ class SearchComponent extends React.Component {
         super(props);
 
         this.state = {data: props.data};
-        this.searchInData = _.debounce(this.searchInData, 350);
+        //this.searchInData = _.debounce(this.searchInData, 350);
         this.search = this.search.bind(this);
     }
 

@@ -4,17 +4,26 @@ import React from 'react';
 
 require('styles/helpers/Table.less');
 
+const defaultArray = [];
+
 class RowComponent extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.renderColumns = this.renderColumns.bind(this);
+    }
+
     renderColumns() {
-        return Object.keys(this.props.data).map(column => {
+        return Object.keys(this.props.data).map((column, index)=> {
 
             return React.createElement(
                 this.props.header ? 'th' : 'td',
                 {
-                    header: this.props.header
+                    header: this.props.header,
+                    key: index
                 },
-                [this.props.header ? column : this.props.data[column]]
+                this.props.header ? column : this.props.data[column]
             );
 
         });
@@ -39,6 +48,7 @@ class TableComponent extends React.Component {
         super(props);
 
         this.state = {data: [], columns: []};
+        this.renderBody = this.renderBody.bind(this);
     }
 
     /**
@@ -63,7 +73,7 @@ class TableComponent extends React.Component {
             return chunk;
         });
 
-        var columns = data.length > 0 ? Object.keys(data[0]) : [];
+        var columns = data.length > 0 ? Object.keys(data[0]) : defaultArray;
 
         this.setState({data: data, columns: columns});
 
@@ -79,6 +89,8 @@ class TableComponent extends React.Component {
     }
 
     renderBody() {
+        console.log('renderBody');
+
         return this.state.data.map((row, index) => {
             return <RowComponent key={index} data={row}/>;
         })
@@ -91,15 +103,18 @@ class TableComponent extends React.Component {
     componentWillReceiveProps(nextProps) {
 
         if(this.props.data !== nextProps.data) {
+            console.log('different');
             this.processData(nextProps);
         }
     }
 
-    shouldComponentUpdate(nextProps) {
-        if(this.props === nextProps) {
+    shouldComponentUpdate(nextProps, nextState) {
+        if(this.props.data === nextProps.data || this.state.data === nextState.data) {
+            console.log('not update');
             return false;
         }
 
+        console.log('updating!');
         return true;
     }
 

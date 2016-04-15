@@ -29,7 +29,7 @@ class AppComponent extends React.Component {
             <form onSubmit={this.handleSubmit.bind(this)}>
                 <h2>Search for Users</h2>
                 <SearchComponent
-                    chosenMain={this.getUser.bind(this)}/>
+                    fromSuggestion={this.getUser.bind(this)}/>
             </form>
 
             <UserComponent user={this.state.user} />

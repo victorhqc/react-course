@@ -4,6 +4,7 @@ const ajax = require('ajax-promise');
 
 import React from 'react';
 import TableComponent from './helpers/TableComponent';
+import SearchComponent from './helpers/SearchComponent';
 
 require('bootstrap/dist/css/bootstrap.css');
 require('styles//Fight.less');
@@ -13,7 +14,7 @@ class FightComponent extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {data: [], refresh: false};
+        this.state = {data: [], filtered: [], refresh: false};
         this.loadingState = false;
     }
 
@@ -22,7 +23,11 @@ class FightComponent extends React.Component {
         ajax.get('http://localhost:3001/people')
         .then(data => {
             this.loadingState = 'loaded';
-            this.setState({data: data.users, refresh: false});
+            this.setState({
+                data: data.users,
+                filtered: data.users,
+                refresh: false
+            });
         })
         .catch(e => console.log('oops!', e) );
     }
@@ -30,6 +35,11 @@ class FightComponent extends React.Component {
     handleClick() {
         this.loadingState = false;
         this.setState({refresh: true});
+    }
+
+    handleSearch(data, error) {
+        data = (!error && data.length === 0) ? this.state.data : data;
+        this.setState({filtered: data});
     }
 
     componentWillMount() {
@@ -66,9 +76,18 @@ class FightComponent extends React.Component {
                 </div>
                 <hr />
                 <div className="row">
+                    <div className="col-sm-4 col-sm-offset-8">
+                        <SearchComponent
+                            data={this.state.data}
+                            suggestions={false}
+                            onSearch={this.handleSearch.bind(this)}
+                            />
+                    </div>
+                </div>
+                <div className="row">
                     <div className="col-sm-12">
                         <TableComponent
-                            data={this.state.data}
+                            data={this.state.filtered}
                             hiddenColumns={['optedin']}
                             />
                     </div>

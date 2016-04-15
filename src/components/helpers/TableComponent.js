@@ -4,35 +4,26 @@ import React from 'react';
 
 require('styles/helpers/Table.less');
 
-/*class ColumnComponent extends React.Component {
-
-}
-
-class HeaderColumnComponent extends React.Component {
-
-}*/
-
 class RowComponent extends React.Component {
 
-    processColumns(children) {
-        return children.map(child => {
+    renderColumns() {
+        return Object.keys(this.props.data).map(column => {
 
-            /*return React.createElement(
-                this.props.header ? 'HeaderColumnComponent' : 'ColumnComponent',
-                {}
-            )*/
-
-            console.log('child', child);
+            return React.createElement(
+                this.props.header ? 'th' : 'td',
+                {
+                    header: this.props.header
+                },
+                [this.props.header ? column : this.props.data[column]]
+            );
 
         });
     }
 
     render() {
-        var { children } = this.props;
-
         return (
-            <tr { ...this.props }>
-                {children}
+            <tr>
+                {this.renderColumns()}
             </tr>
         );
     }
@@ -82,11 +73,15 @@ class TableComponent extends React.Component {
     }
 
     renderHeader() {
+        if(this.state.data.length === 0) { return false; }
 
+        return <RowComponent data={this.state.data[0]} header={true} />
     }
 
     renderBody() {
-
+        return this.state.data.map((row, index) => {
+            return <RowComponent key={index} data={row}/>;
+        })
     }
 
     componentWillMount() {
@@ -111,8 +106,12 @@ class TableComponent extends React.Component {
     render() {
         return (
             <table className="table table-striped">
-                <thead></thead>
-                <tbody></tbody>
+                <thead>
+                    { this.renderHeader() }
+                </thead>
+                <tbody>
+                    { this.renderBody() }
+                </tbody>
             </table>
         );
     }

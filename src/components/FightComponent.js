@@ -55,16 +55,22 @@ class FightComponent extends React.Component {
         return (
             <div className="fight-component container" style={{marginTop: 50}}>
                 <div className="row">
-                    <div className="col-sm-12">
+                    <div className="col-sm-6">
+                        <h4>Gotten {this.state.data.length} users</h4>
+                        </div>
+                    <div className="col-sm-6">
                         <button className="btn btn-success" onClick={this.handleClick.bind(this)}>
-                            Refresh Data!
+                            Refresh Data
                         </button>
-                        <hr />
                     </div>
                 </div>
+                <hr />
                 <div className="row">
                     <div className="col-sm-12">
-                        <TableComponent data={this.state.data} />
+                        <TableComponent
+                            data={this.state.data}
+                            hiddenColumns={['optedin']}
+                            />
                     </div>
                 </div>
             </div>
